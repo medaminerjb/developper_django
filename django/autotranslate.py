@@ -30,12 +30,19 @@ def extract_empty_msgstr(file_path):
     translated_data = {}
     
     for key, value in data.items():
-        print(f"Key: \"{key}\"")
-        new_value = scrape(value)
-        translated_data[key] = new_value
-        print(f"Translated Value: \"{translated_data[key]}\"")
-        print('-' * 40)
-    
+        range ={}
+        if type(value) is dict:
+            for key1, value1 in value.items():
+                new_value1 = scrape(value1)
+                range[key1] = new_value1    
+            translated_data[key] = range
+        else :
+            print(f"Key: \"{key}\"")
+            new_value = scrape(value)
+            translated_data[key] = new_value
+            print(f"Translated Value: \"{translated_data[key]}\"")
+            print('-' * 40)
+
     with open('translated_file.json', 'w', encoding='utf-8') as file:
         json.dump(translated_data, file, ensure_ascii=False, indent=4)
 
